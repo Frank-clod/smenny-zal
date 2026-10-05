@@ -282,14 +282,15 @@ var EX={
   db_incline_n:{n:'Жим гантелей на наклонной, нейтральный хват',t:'db',start:16,sets:3,lo:10,hi:12,rest:90,upper:1},
   db_fly:{n:'Разводка гантелей лёжа',t:'db',start:10,sets:3,lo:12,hi:15,rest:60,upper:1},
   cable_oh:{n:'Разгибание одной рукой на блоке',t:'cable',inc:2.5,start:7.5,sets:3,lo:12,hi:15,rest:60,upper:1,elbow:1},
+  seated_calf:{n:'Подъёмы на носки сидя в тренажёре',t:'machine',inc:5,start:30,sets:3,lo:12,hi:15,rest:60,legs:1},
   face_pull:{n:'Тяга каната к лицу',t:'cable',inc:2.5,start:12.5,sets:3,lo:12,hi:15,rest:60,upper:1},
   seated_row:{n:'Горизонтальная тяга блока, нейтральная рукоять',t:'cable',inc:2.5,start:40,sets:3,lo:10,hi:12,rest:90,upper:1},
   db_rdl:{n:'Румынская тяга с гантелями',t:'db',start:22,sets:3,lo:10,hi:12,rest:90,legs:1}
 };
 var WO={
-  A1:{name:'Тяжёлая грудь',cycle:'Штанга',ex:['bb_bench','bb_incline','bb_row','face_pull','squat','rope_pd','ez_curl']},
+  A1:{name:'Тяжёлая грудь',cycle:'Штанга',ex:['bb_bench','bb_incline','bb_row','face_pull','squat','seated_calf','rope_pd','ez_curl']},
   A2:{name:'Объём и руки',cycle:'Штанга',ex:['bb_bench_vol','cable_fly','pulldown','seated_row','lat_raise','hammer','bar_pd','rdl']},
-  B1:{name:'Тяжёлая грудь',cycle:'Гантели',ex:['db_bench','db_incline','db_row','face_pull','leg_press','rope_pd','db_curl']},
+  B1:{name:'Тяжёлая грудь',cycle:'Гантели',ex:['db_bench','db_incline','db_row','face_pull','leg_press','seated_calf','rope_pd','db_curl']},
   B2:{name:'Объём и руки',cycle:'Гантели',ex:['db_incline_n','db_fly','pulldown','seated_row','lat_raise','hammer','cable_oh','db_rdl']}
 };
 var INFO={
@@ -314,6 +315,7 @@ var INFO={
   db_incline_n:['Верх груди, трицепс','Ладони смотрят друг на друга — самый щадящий жим для локтя и плеча.'],
   db_fly:['Грудь, растяжение','Лёгкий вес, локти согнуты. Опускай до лёгкого растяжения груди, не глубже.'],
   cable_oh:['Трицепс','Одной рукой, локоть прижат к корпусу. Медленно, без рывка в конце.'],
+  seated_calf:['Икры, камбаловидная мышца','Носки на краю платформы, валик плотно на коленях. Опускай пятки до растяжения, вверху задержись на секунду. Без пружинящих рывков.'],
   face_pull:['Задняя дельта, мышцы, которые держат плечо','Блок на уровне лица. Тяни канат к переносице и разводи концы в стороны, локти высоко. Вес лёгкий, без рывков.'],
   seated_row:['Середина спины, широчайшие','Спина ровная, корпус почти неподвижен. Тяни рукоять к поясу и своди лопатки, плечи вниз. Назад отпускай медленно, до растяжения спины.'],
   db_rdl:['Бицепс бедра, ягодицы','Таз назад, гантели скользят вдоль бёдер, спина ровная.']
@@ -354,6 +356,7 @@ var FIG={
   curl:{a:mk(STAND,{ua:84,fa:84}),b:mk(STAND,{ua:88,fa:-60}),la:'Внизу: руки прямые',lb:'Вверху: локоть на месте'},
   pushdown:{pulley:[82,4],a:mk(STAND,{hip:[44,52],t:-82,th:92,ua:95,fa:-45}),b:mk(STAND,{hip:[44,52],t:-82,th:92,ua:95,fa:75}),la:'Вверху: локти прижаты',lb:'Внизу: руки прямые'},
   pulldown:{pulley:[42,2],props:[{r:[24,68,30,5]},{l:[[38,73],[38,88]]},{r:[54,58,12,4]}],a:{hip:[40,66],t:-95,th:0,sh:90,ua:-85,fa:-88,floor:88},b:{hip:[40,66],t:-95,th:0,sh:90,ua:115,fa:-60,floor:88},la:'Вверху: руки прямые',lb:'Внизу: к верху груди'},
+  calf:{props:[{r:[22,66,30,5]},{l:[[36,71],[36,90]]},{r:[50,55,16,5]},{r:[60,86,16,4]}],a:{hip:[38,64],t:-90,th:0,sh:90,ft:-28,ua:62,fa:5,floor:92},b:{hip:[38,64],t:-90,th:-12,sh:90,ft:38,ua:62,fa:5,floor:92},la:'Внизу: пятки опущены',lb:'Вверху: на носках'},
   facepull:{pulley:[86,20],a:mk(STAND,{hip:[44,52],t:-90,ua:-8,fa:-4}),b:mk(STAND,{hip:[44,52],t:-90,ua:-160,fa:-12}),la:'Старт: руки вперёд',lb:'Финиш: канат к лицу'},
   srow:{pulley:[94,64],props:[{r:[18,72,30,4]},{l:[[80,58],[80,80]]}],a:{hip:[34,70],t:-95,th:-5,sh:5,ua:5,fa:3,floor:88},b:{hip:[34,70],t:-95,th:-5,sh:5,ua:125,fa:-8,floor:88},la:'Старт: руки вперёд',lb:'Финиш: рукоять к поясу'},
   lateral:{front:1,a:{ua:82,fa:88},b:{ua:-3,fa:0},la:'Внизу: руки вдоль тела',lb:'Вверху: до уровня плеч'},
@@ -362,7 +365,7 @@ var FIG={
 var FIGMAP={bb_bench:['press','bar'],bb_bench_vol:['press','bar'],db_bench:['press','db'],db_fly:['dbfly','db'],bb_incline:['incline','bar'],db_incline:['incline','db'],db_incline_n:['incline','db'],
   bb_row:['row','bar'],db_row:['row','db'],squat:['squat','bar'],leg_press:['legpress','none'],rdl:['rdl','bar'],db_rdl:['rdl','db'],
   ez_curl:['curl','ez'],db_curl:['curl','db'],hammer:['curl','db'],rope_pd:['pushdown','rope'],bar_pd:['pushdown','rope'],cable_oh:['pushdown','rope'],
-  pulldown:['pulldown','rope'],lat_raise:['lateral','db'],face_pull:['facepull','rope'],seated_row:['srow','rope'],cable_fly:['cfly','rope']};
+  pulldown:['pulldown','rope'],lat_raise:['lateral','db'],face_pull:['facepull','rope'],seated_calf:['calf','none'],seated_row:['srow','rope'],cable_fly:['cfly','rope']};
 function eqAt(q,kind){
   if(kind==='bar')return '<circle class="fg-plate" cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="8"/>';
   if(kind==='ez')return '<circle class="fg-plate" cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="5.5"/>';
@@ -377,7 +380,7 @@ function propsSVG(pr){return (pr||[]).map(function(x){
 function sideSVG(f,p,kind){
   var j=side(p),g='<line class="fg-floor" x1="2" x2="98" y1="'+p.floor+'" y2="'+p.floor+'"/>'+propsSVG(f.props);
   if(f.pulley)g+='<line class="fg-cable" x1="'+f.pulley[0]+'" y1="'+f.pulley[1]+'" x2="'+j.hd[0].toFixed(1)+'" y2="'+j.hd[1].toFixed(1)+'"/><circle class="fg-pulley" cx="'+f.pulley[0]+'" cy="'+f.pulley[1]+'" r="3"/>';
-  var foot=f.foot?j.an:[j.an[0]+(p.t===180||p.t===-150?5:6),j.an[1]];
+  var foot=f.foot?j.an:(p.ft!=null?P(j.an,p.ft,9):[j.an[0]+(p.t===180||p.t===-150?5:6),j.an[1]]);
   if(f.foot){var a1=P(j.an,p.sh-90,11),a2=P(j.an,p.sh+90,11);g+='<line class="fg-plat" x1="'+a1[0].toFixed(1)+'" y1="'+a1[1].toFixed(1)+'" x2="'+a2[0].toFixed(1)+'" y2="'+a2[1].toFixed(1)+'"/>'}
   g+='<polyline class="fg-body" points="'+pl([foot,j.an,j.k,j.hip,j.s])+'"/><circle class="fg-head" cx="'+j.head[0].toFixed(1)+'" cy="'+j.head[1].toFixed(1)+'" r="6"/>';
   if(f.eq==='back')g+=eqAt([j.s[0]-4,j.s[1]-1],'bar');
@@ -1009,10 +1012,10 @@ function viewPlan(){
     h+='<details><summary>'+WO[w].cycle+' · '+WO[w].name+'</summary><div class="list" style="margin-top:6px">'+WO[w].ex.map(function(k){var sc=schemeOf(k,ph);return '<div class="li"><div>'+esc(EX[k].n)+(EX[k].elbow?' <span class="badge">локоть</span>':'')+'</div><div class="r num">'+sc.n+'×'+(sc.lo===sc.hi?sc.lo:sc.lo+'–'+sc.hi)+'</div></div>'}).join('')+'</div></details>';
   });
   h+='</div>';
-  h+='<div class="card"><h2>Правила прогрессии</h2><div class="stack-s small"><p>Все подходы на верхней границе повторов → +2,5 кг на штангу, +5 кг на ноги, шаг гантелей на гантели.</p><p>В диапазоне → тот же вес, добавляй повторы.</p><p>Недобор → тот же вес ещё раз. Два недобора подряд → −10% и снова вверх.</p><p>Локоть 3–4 → −15% на верх тела и молотки вместо сгибаний. 5+ → только ноги.</p><p>До отказа — только последний подход сведения в кроссовере и махов в стороны, с 4-й недели. Жимы, тяги, ноги, трицепс и бицепс — никогда до отказа: 1–2 повтора в запасе.</p></div></div>';
+  h+='<div class="card"><h2>Правила прогрессии</h2><div class="stack-s small"><p>Все подходы на верхней границе повторов → +2,5 кг на штангу, +5 кг на ноги, шаг гантелей на гантели.</p><p>В диапазоне → тот же вес, добавляй повторы.</p><p>Недобор → тот же вес ещё раз. Два недобора подряд → −10% и снова вверх.</p><p>Локоть 3–4 → −15% на верх тела и молотки вместо сгибаний. 5+ → только ноги.</p><p>Ноги в тяжёлые дни: присед или жим ногами, затем икры сидя.</p><p>До отказа — только последний подход сведения в кроссовере и махов в стороны, с 4-й недели. Жимы, тяги, ноги, трицепс и бицепс — никогда до отказа: 1–2 повтора в запасе.</p></div></div>';
   h+='<div class="card"><h2>Настройки</h2>';
   h+='<label class="lbl" for="set-start">Первый день круга — ночная смена с тренировкой<input class="field" type="date" id="set-start" data-set="start" value="'+esc(st.start)+'"></label>';
-  h+='<label class="check"><input type="checkbox" id="set-legs" data-set="legs"'+(st.legs?' checked':'')+'> Включать ноги (присед, румынская тяга)</label>';
+  h+='<label class="check"><input type="checkbox" id="set-legs" data-set="legs"'+(st.legs?' checked':'')+'> Включать ноги (присед, жим ногами, икры, румынская тяга)</label>';
   h+='<label class="check"><input type="checkbox" id="set-rest" data-set="restTimer"'+(st.restTimer?' checked':'')+'> Таймер отдыха после каждого подхода</label>';
   h+='<div class="grid2"><label class="lbl" for="set-dbstep">Шаг гантелей<select id="set-dbstep" data-set="dbStep">'+[1,2,2.5].map(function(v){return '<option value="'+v+'"'+(+st.dbStep===v?' selected':'')+'>'+fmt(v)+' кг</option>'}).join('')+'</select></label>';
   h+='<label class="lbl" for="set-bar">Гриф, кг<input class="field" id="set-bar" data-set="bar" inputmode="decimal" value="'+fmt(st.bar)+'"></label></div>';
