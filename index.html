@@ -408,7 +408,7 @@ var PHASES={
   3:{name:'Сила',weeks:'9–12',txt:'Жим в 3–5 повторах, выход к 100+ кг. Техника чистая, без отказа.'}
 };
 var GOAL=Math.round(brz(103,3));
-var DEF={kind:'settings',start:'2026-10-05',legs:true,dbStep:2,bar:20,ez:10,startW:{}};
+var DEF={kind:'settings',start:'2026-10-05',legs:true,restTimer:false,dbStep:2,bar:20,ez:10,startW:{}};
 
 /* ---------- Utils ---------- */
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -1012,6 +1012,7 @@ function viewPlan(){
   h+='<div class="card"><h2>Настройки</h2>';
   h+='<label class="lbl" for="set-start">Первый день круга — ночная смена с тренировкой<input class="field" type="date" id="set-start" data-set="start" value="'+esc(st.start)+'"></label>';
   h+='<label class="check"><input type="checkbox" id="set-legs" data-set="legs"'+(st.legs?' checked':'')+'> Включать ноги (присед, румынская тяга)</label>';
+  h+='<label class="check"><input type="checkbox" id="set-rest" data-set="restTimer"'+(st.restTimer?' checked':'')+'> Таймер отдыха после каждого подхода</label>';
   h+='<div class="grid2"><label class="lbl" for="set-dbstep">Шаг гантелей<select id="set-dbstep" data-set="dbStep">'+[1,2,2.5].map(function(v){return '<option value="'+v+'"'+(+st.dbStep===v?' selected':'')+'>'+fmt(v)+' кг</option>'}).join('')+'</select></label>';
   h+='<label class="lbl" for="set-bar">Гриф, кг<input class="field" id="set-bar" data-set="bar" inputmode="decimal" value="'+fmt(st.bar)+'"></label></div>';
   h+='<label class="lbl" for="set-ez">EZ-гриф, кг<input class="field" id="set-ez" data-set="ez" inputmode="decimal" value="'+fmt(st.ez)+'"></label>';
@@ -1076,7 +1077,7 @@ function toggleSet(i,j){
   err.hidden=true;x.w=w;x.r=Math.round(r);x.ok=true;
   var nextRow=e.sets[j+1];
   persist(s);updateCard(i);
-  if(s.date===todayStr())startRest(EX[e.key].rest,nextRow?'дальше подход '+(j+2):'дальше следующее упражнение');
+  if(s.date===todayStr()&&settings().restTimer)startRest(EX[e.key].rest,nextRow?'дальше подход '+(j+2):'дальше следующее упражнение');
 }
 app.addEventListener('input',function(ev){
   var el=ev.target;
@@ -1109,6 +1110,7 @@ app.addEventListener('change',function(ev){
     else{
       var f=el.dataset.set;
       if(f==='legs')st.legs=el.checked;
+      else if(f==='restTimer')st.restTimer=el.checked;
       else if(f==='start'){if(/^\d{4}-\d{2}-\d{2}$/.test(el.value))st.start=el.value;else return}
       else{var n2=parseNum(el.value);if(n2==null||n2<0)return;st[f]=n2}
     }
