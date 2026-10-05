@@ -223,6 +223,7 @@ button.cal-r{width:100%;background:none;border-left:0;border-right:0;border-bott
 .fg-cable{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:2.5 2}
 .fg-pulley{fill:var(--muted)}
 .fg-plat{stroke:var(--p15);stroke-width:5;stroke-linecap:round}
+.upd{position:fixed;left:12px;right:12px;top:calc(8px + env(safe-area-inset-top,0px));z-index:20;max-width:540px;margin:0 auto;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:8px 8px 8px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px}
 .empty{padding:22px 14px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
 @media (hover:none){.kbd-tip{display:none}}
 @media (min-width:900px){.app{max-width:680px}.rest-in,.go-in{max-width:660px}.nav-in{max-width:680px}}
@@ -1212,7 +1213,18 @@ cleanupStale();
 render();
 if(STANDALONE){
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
-  if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(function(){});
+  if('serviceWorker' in navigator&&location.protocol==='https:'){
+    var hadCtl=!!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(reg){
+      reg.update();
+      document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')reg.update()});
+    }).catch(function(){});
+    navigator.serviceWorker.addEventListener('controllerchange',function(){
+      if(!hadCtl){hadCtl=true;return}
+      if(!S.cur){location.reload();return}
+      if(!document.getElementById('upd')){var d=document.createElement('div');d.id='upd';d.className='upd';d.innerHTML='Вышло обновление приложения <button type="button" class="btn sm primary">Обновить</button>';d.querySelector('button').onclick=function(){location.reload()};document.body.appendChild(d)}
+    });
+  }
 }else connect();
 })();
 </script>
