@@ -283,14 +283,15 @@ var EX={
   db_fly:{n:'Разводка гантелей лёжа',t:'db',start:10,sets:3,lo:12,hi:15,rest:60,upper:1},
   cable_oh:{n:'Разгибание одной рукой на блоке',t:'cable',inc:2.5,start:7.5,sets:3,lo:12,hi:15,rest:60,upper:1,elbow:1},
   seated_calf:{n:'Подъёмы на носки сидя в тренажёре',t:'machine',inc:5,start:30,sets:3,lo:12,hi:15,rest:60,legs:1},
+  rev_fly:{n:'Обратная бабочка в тренажёре',t:'machine',inc:2.5,start:35,sets:3,lo:12,hi:15,rest:60,upper:1},
   face_pull:{n:'Тяга каната к лицу',t:'cable',inc:2.5,start:12.5,sets:3,lo:12,hi:15,rest:60,upper:1},
   seated_row:{n:'Горизонтальная тяга блока, нейтральная рукоять',t:'cable',inc:2.5,start:40,sets:3,lo:10,hi:12,rest:90,upper:1},
   db_rdl:{n:'Румынская тяга с гантелями',t:'db',start:22,sets:3,lo:10,hi:12,rest:90,legs:1}
 };
 var WO={
-  A1:{name:'Тяжёлая грудь',cycle:'Штанга',ex:['bb_bench','bb_incline','bb_row','face_pull','squat','seated_calf','rope_pd','ez_curl']},
+  A1:{name:'Тяжёлая грудь',cycle:'Штанга',ex:['bb_bench','bb_incline','bb_row','rev_fly','squat','seated_calf','rope_pd','ez_curl']},
   A2:{name:'Объём и руки',cycle:'Штанга',ex:['bb_bench_vol','cable_fly','pulldown','seated_row','lat_raise','hammer','bar_pd','rdl']},
-  B1:{name:'Тяжёлая грудь',cycle:'Гантели',ex:['db_bench','db_incline','db_row','face_pull','leg_press','seated_calf','rope_pd','db_curl']},
+  B1:{name:'Тяжёлая грудь',cycle:'Гантели',ex:['db_bench','db_incline','db_row','rev_fly','leg_press','seated_calf','rope_pd','db_curl']},
   B2:{name:'Объём и руки',cycle:'Гантели',ex:['db_incline_n','db_fly','pulldown','seated_row','lat_raise','hammer','cable_oh','db_rdl']}
 };
 var INFO={
@@ -316,6 +317,7 @@ var INFO={
   db_fly:['Грудь, растяжение','Лёгкий вес, локти согнуты. Опускай до лёгкого растяжения груди, не глубже.'],
   cable_oh:['Трицепс','Одной рукой, локоть прижат к корпусу. Медленно, без рывка в конце.'],
   seated_calf:['Икры, камбаловидная мышца','Носки на краю платформы, валик плотно на коленях. Опускай пятки до растяжения, вверху задержись на секунду. Без пружинящих рывков.'],
+  rev_fly:['Задняя дельта, верх спины — осанка','Грудью к спинке, ручки на уровне плеч. Разводи руки в стороны и назад по дуге, локти чуть согнуты и угол не меняют. В конце сведи лопатки и задержись на секунду. Без рывков и без раскачки корпусом.'],
   face_pull:['Задняя дельта, мышцы, которые держат плечо','Блок на уровне лица. Тяни канат к переносице и разводи концы в стороны, локти высоко. Вес лёгкий, без рывков.'],
   seated_row:['Середина спины, широчайшие','Спина ровная, корпус почти неподвижен. Тяни рукоять к поясу и своди лопатки, плечи вниз. Назад отпускай медленно, до растяжения спины.'],
   db_rdl:['Бицепс бедра, ягодицы','Таз назад, гантели скользят вдоль бёдер, спина ровная.']
@@ -359,13 +361,14 @@ var FIG={
   calf:{props:[{r:[22,66,30,5]},{l:[[36,71],[36,90]]},{r:[50,55,16,5]},{r:[60,86,16,4]}],a:{hip:[38,64],t:-90,th:0,sh:90,ft:-28,ua:62,fa:5,floor:92},b:{hip:[38,64],t:-90,th:-12,sh:90,ft:38,ua:62,fa:5,floor:92},la:'Внизу: пятки опущены',lb:'Вверху: на носках'},
   facepull:{pulley:[86,20],a:mk(STAND,{hip:[44,52],t:-90,ua:-8,fa:-4}),b:mk(STAND,{hip:[44,52],t:-90,ua:-160,fa:-12}),la:'Старт: руки вперёд',lb:'Финиш: канат к лицу'},
   srow:{pulley:[94,64],props:[{r:[18,72,30,4]},{l:[[80,58],[80,80]]}],a:{hip:[34,70],t:-95,th:-5,sh:5,ua:5,fa:3,floor:88},b:{hip:[34,70],t:-95,th:-5,sh:5,ua:125,fa:-8,floor:88},la:'Старт: руки вперёд',lb:'Финиш: рукоять к поясу'},
+  revfly:{front:1,a:{ua:178,fa:182},b:{ua:-2,fa:0},la:'Старт: руки впереди',lb:'Финиш: руки разведены'},
   lateral:{front:1,a:{ua:82,fa:88},b:{ua:-3,fa:0},la:'Внизу: руки вдоль тела',lb:'Вверху: до уровня плеч'},
   cfly:{front:1,pulleys:1,a:{ua:-25,fa:-20},b:{ua:60,fa:160},la:'Старт: руки в стороны',lb:'Финиш: руки сведены'}
 };
 var FIGMAP={bb_bench:['press','bar'],bb_bench_vol:['press','bar'],db_bench:['press','db'],db_fly:['dbfly','db'],bb_incline:['incline','bar'],db_incline:['incline','db'],db_incline_n:['incline','db'],
   bb_row:['row','bar'],db_row:['row','db'],squat:['squat','bar'],leg_press:['legpress','none'],rdl:['rdl','bar'],db_rdl:['rdl','db'],
   ez_curl:['curl','ez'],db_curl:['curl','db'],hammer:['curl','db'],rope_pd:['pushdown','rope'],bar_pd:['pushdown','rope'],cable_oh:['pushdown','rope'],
-  pulldown:['pulldown','rope'],lat_raise:['lateral','db'],face_pull:['facepull','rope'],seated_calf:['calf','none'],seated_row:['srow','rope'],cable_fly:['cfly','rope']};
+  pulldown:['pulldown','rope'],lat_raise:['lateral','db'],face_pull:['facepull','rope'],rev_fly:['revfly','rope'],seated_calf:['calf','none'],seated_row:['srow','rope'],cable_fly:['cfly','rope']};
 function eqAt(q,kind){
   if(kind==='bar')return '<circle class="fg-plate" cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="8"/>';
   if(kind==='ez')return '<circle class="fg-plate" cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="5.5"/>';
